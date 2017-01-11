@@ -25,13 +25,14 @@ module Shorty
     # Only loads a smaller set of middleware suitable for API only apps.
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
+    config.autoload_paths << Rails.root.join('lib')
     config.api_only = true
     config.generators do |gen|
     	gen.test_framework :rspec,
     	fixtures: true,
     	view_specs: false,
     	help_specs: false,
-    	routing_specs: false,
+    	routing_specs: true,
     	controller_specs: true,
     	request_specs: false
     	gen.fixture_replacement :factory_girl, dir: "spec/factories"
