@@ -14,7 +14,7 @@ class ShortUrlsController < ApplicationController
 
   # GET /short_urls/1
   def show
-    ip = request.remote_ip  #ip = '117.216.146.232'
+    ip = '117.216.146.232' #request.remote_ip  # use commented code for productions
     visitor_data = get_visitor_details(ip)
     @short_url.short_visits.build(
       visitor_ip: visitor_data["ip"], 
