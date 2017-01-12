@@ -3,7 +3,7 @@ before_action :set_user, only: [:create]
 
   def create
     if @user.authenticate(params[:session][:password])
-      @user.regenerate_token
+      @user.regenerate_token	
       render json: @user, status: :created,
              serializer: ActiveModel::Serializer::SessionSerializer and return
     end

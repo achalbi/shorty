@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :short_visits, only: [:show]
+  resources :short_visits, only: [:show, :index, :destroy]
   resources :short_urls, except: [:new, :edit]
   resources :users, except: [:new, :edit, :index]
   

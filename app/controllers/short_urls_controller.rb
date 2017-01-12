@@ -7,14 +7,13 @@ class ShortUrlsController < ApplicationController
 
   # GET /short_urls
   def index
-    @short_urls = ShortUrl.page(params[:page] ? params[:page][:number] : 1)
+    @short_urls = current_user.short_urls.page(params[:page] ? params[:page][:number] : 1)
     render json: @short_urls
   end
 
   # GET /short_urls/1
   def show
-    #ip = request.remote_ip
-    ip = '117.216.146.232'
+    ip = request.remote_ip  #ip = '117.216.146.232'
     visitor_data = get_visitor_details(ip)
     @short_url.short_visits.build(
       visitor_ip: visitor_data["ip"], 
@@ -24,7 +23,7 @@ class ShortUrlsController < ApplicationController
     if @short_url.save
       redirect_to @short_url.normalized_url, status: :moved_permanently 
     else
-      render json: @short_url.errors, status: :unprocessable_entity
+      render_error(@short_url, :unprocessable_entity)
     end
   end
 
@@ -36,9 +35,9 @@ class ShortUrlsController < ApplicationController
       @short_url.shorty = ShortUrl.generate_shorty
     end until @short_url.valid? # might want to break out after valid
     if @short_url.save
-      render json: request.base_url+@short_url.shorty, status: :created, location: @short_url
+      render json: @short_url, status: :created, location: @short_url
     else
-      render json: @short_url.errors, status: :unprocessable_entity
+      render_error(@short_url, :unprocessable_entity)
     end
   end
 
@@ -47,7 +46,7 @@ class ShortUrlsController < ApplicationController
     if @short_url.update(short_url_params)
       render json: @short_url
     else
-      render json: @short_url.errors, status: :unprocessable_entity
+      render_error(@short_url, :unprocessable_entity)
     end
   end
 
