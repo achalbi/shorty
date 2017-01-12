@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :short_visits, only: [:show, :index, :destroy]
-  resources :short_urls, except: [:new, :edit]
+  resources :short_urls, except: [:new, :edit, :show]
   resources :users, except: [:new, :edit, :index]
   
   get ':shorty' => 'short_urls#show'

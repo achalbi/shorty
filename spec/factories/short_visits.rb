@@ -14,10 +14,10 @@
 
 FactoryGirl.define do
   factory :short_visit do
-    short_url nil
-    visitor_ip "MyString"
-    visitor_city "MyString"
-    visitor_state "MyString"
-    visitor_country "MyString"
+    association :short_url
+    visitor_ip "1.1.1.1"
+    visitor_city "Bengaluru"
+    visitor_state "KA"
+    visitor_country "IND"
   end
 end

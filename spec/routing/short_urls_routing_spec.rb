@@ -7,16 +7,16 @@ RSpec.describe ShortUrlsController, type: :routing do
       expect(:get => "/short_urls").to route_to("short_urls#index")
     end
 
-    it "routes to #new" do
-      expect(:get => "/short_urls/new").to route_to("short_urls#new")
+    it "does not route to #new" do
+      expect(:get => "/short_urls/new").not_to be_routable
     end
 
     it "routes to #show" do
-      expect(:get => "/short_urls/1").to route_to("short_urls#show", :id => "1")
+      expect(:get => "/shorty").to route_to("short_urls#show", :shorty => "shorty")
     end
 
-    it "routes to #edit" do
-      expect(:get => "/short_urls/1/edit").to route_to("short_urls#edit", :id => "1")
+    it "does not route to #edit" do
+      expect(:get => "/short_urls/1/edit").not_to be_routable
     end
 
     it "routes to #create" do

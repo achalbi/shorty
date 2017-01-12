@@ -13,9 +13,9 @@
 
 FactoryGirl.define do
   factory :short_url do
-    original_url "MyString"
-    shorty "MyString"
-    user nil
+    original_url "www.google.com"
+    shorty "ABCDE"
+    association :user 
     visits_count 1
   end
 end

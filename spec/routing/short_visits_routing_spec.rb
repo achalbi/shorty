@@ -7,28 +7,28 @@ RSpec.describe ShortVisitsController, type: :routing do
       expect(:get => "/short_visits").to route_to("short_visits#index")
     end
 
-    it "routes to #new" do
-      expect(:get => "/short_visits/new").to route_to("short_visits#new")
+    it "does not route to #new" do
+      expect(:get => "/short_visits/new").to_not route_to('short_visits#new')
     end
 
     it "routes to #show" do
       expect(:get => "/short_visits/1").to route_to("short_visits#show", :id => "1")
     end
 
-    it "routes to #edit" do
-      expect(:get => "/short_visits/1/edit").to route_to("short_visits#edit", :id => "1")
+    it "does not route to #edit" do
+      expect(:get => "/short_visits/1/edit").not_to be_routable
     end
 
-    it "routes to #create" do
-      expect(:post => "/short_visits").to route_to("short_visits#create")
+    it "does not route to #create" do
+      expect(:post => "/short_visits").not_to be_routable
     end
 
-    it "routes to #update via PUT" do
-      expect(:put => "/short_visits/1").to route_to("short_visits#update", :id => "1")
+    it "does not route to #update via PUT" do
+      expect(:put => "/short_visits/1").not_to be_routable
     end
 
-    it "routes to #update via PATCH" do
-      expect(:patch => "/short_visits/1").to route_to("short_visits#update", :id => "1")
+    it "does not route to #update via PATCH" do
+      expect(:patch => "/short_visits/1").not_to be_routable
     end
 
     it "routes to #destroy" do
