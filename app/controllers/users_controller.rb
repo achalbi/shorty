@@ -1,12 +1,6 @@
 class UsersController < ApplicationController
+  before_action :validate_user
   before_action :set_user, only: [:show, :update, :destroy]
-
-  # GET /users
-  def index
-    @users = User.all
-
-    render json: @users
-  end
 
   # GET /users/1
   def show
@@ -20,7 +14,7 @@ class UsersController < ApplicationController
     if @user.save
       render json: @user, status: :created, location: @user
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render_error(@user, :unprocessable_entity)
     end
   end
 
@@ -29,7 +23,7 @@ class UsersController < ApplicationController
     if @user.update(user_params)
       render json: @user
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render_error(@user, :unprocessable_entity)
     end
   end
 
@@ -42,11 +36,13 @@ class UsersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
+      unless current_user == @user
+         head 401 and return #unauthorized access
+      end 
     end
 
     # Only allow a trusted parameter "white list" through.
     def user_params
       params.require(:user).permit(:name, :email, :password, :password_confirmation)
-      #ActiveModelSerializers::Deserialization.jsonapi_parse(params)
     end
 end

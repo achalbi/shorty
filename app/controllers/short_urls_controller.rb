@@ -1,19 +1,31 @@
 class ShortUrlsController < ApplicationController
   include FreegeoipUtils
 
-  before_action :set_short_url, only: [:show, :destroy]
-  before_action :validate_user
+  before_action :set_short_url, only: [:destroy]
+  before_action :set_short_url_by_shorty, only: [:show]
+  before_action :validate_user, except: [:show]
 
   # GET /short_urls
   def index
     @short_urls = ShortUrl.page(params[:page] ? params[:page][:number] : 1)
-
     render json: @short_urls
   end
 
   # GET /short_urls/1
   def show
-    render json: @short_url
+    #ip = request.remote_ip
+    ip = '117.216.146.232'
+    visitor_data = get_visitor_details(ip)
+    @short_url.short_visits.build(
+      visitor_ip: visitor_data["ip"], 
+      visitor_city: visitor_data["city"],
+      visitor_state: visitor_data["region_name"],
+      visitor_country: visitor_data["country_name"])
+    if @short_url.save
+      redirect_to @short_url.normalized_url, status: :moved_permanently 
+    else
+      render json: @short_url.errors, status: :unprocessable_entity
+    end
   end
 
   # POST /short_urls
@@ -22,11 +34,9 @@ class ShortUrlsController < ApplicationController
     @short_url.user = current_user 
     begin
       @short_url.shorty = ShortUrl.generate_shorty
-    # might want to break out after valid
-    end until @short_url.valid?
-
+    end until @short_url.valid? # might want to break out after valid
     if @short_url.save
-      render json: @short_url, status: :created, location: @short_url
+      render json: request.base_url+@short_url.shorty, status: :created, location: @short_url
     else
       render json: @short_url.errors, status: :unprocessable_entity
     end
@@ -44,11 +54,6 @@ class ShortUrlsController < ApplicationController
   # DELETE /short_urls/1
   def destroy
     @short_url.destroy
-  end
-
-  #Track urls
-  def track
-    get_visitor_details(request.remote_ip)
   end
 
   private

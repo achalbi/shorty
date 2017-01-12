@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
-  resources :short_urls
-  resources :short_visits
-  resources :short_visits, except: [:new, :edit]
+  resources :short_visits, only: [:show]
   resources :short_urls, except: [:new, :edit]
-  resources :users, except: [:new, :edit]
+  resources :users, except: [:new, :edit, :index]
+  
+  get ':shorty' => 'short_urls#show'
+
+  post    'sessions'     => 'sessions#create'
+  delete  'sessions/:id' => 'sessions#destroy'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

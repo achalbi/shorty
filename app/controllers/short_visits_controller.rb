@@ -13,25 +13,6 @@ class ShortVisitsController < ApplicationController
     render json: @short_visit
   end
 
-  # POST /short_visits
-  def create
-    @short_visit = ShortVisit.new(short_visit_params)
-
-    if @short_visit.save
-      render json: @short_visit, status: :created, location: @short_visit
-    else
-      render json: @short_visit.errors, status: :unprocessable_entity
-    end
-  end
-
-  # PATCH/PUT /short_visits/1
-  def update
-    if @short_visit.update(short_visit_params)
-      render json: @short_visit
-    else
-      render json: @short_visit.errors, status: :unprocessable_entity
-    end
-  end
 
   # DELETE /short_visits/1
   def destroy

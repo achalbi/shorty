@@ -48,6 +48,9 @@ GEM
       rack-test (~> 0.6, >= 0.6.2)
       rest-client (~> 1.7, >= 1.7.3)
       rspec (~> 3.1, >= 3.1.0)
+    annotate (2.6.5)
+      activerecord (>= 2.3.0)
+      rake (>= 0.8.7)
     arel (7.1.4)
     bcrypt (3.1.11)
     builder (3.2.2)
@@ -208,6 +211,7 @@ PLATFORMS
 DEPENDENCIES
   active_model_serializers
   airborne
+  annotate
   bcrypt (~> 3.1.7)
   byebug
   database_cleaner
