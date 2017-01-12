@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
   resources :short_visits, only: [:show, :index, :destroy]
-  resources :short_urls, except: [:new, :edit, :show]
+  resources :short_urls, except: [:new, :edit]
   resources :users, except: [:new, :edit, :index]
   
-  get ':shorty' => 'short_urls#show'
+  get ':shorty' => 'short_urls#shorty'
 
   post    'sessions'     => 'sessions#create'
   delete  'sessions/:id' => 'sessions#destroy'

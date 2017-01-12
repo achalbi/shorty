@@ -8,11 +8,15 @@ RSpec.describe ShortUrlsController, type: :routing do
     end
 
     it "does not route to #new" do
-      expect(:get => "/short_urls/new").not_to be_routable
+      expect(:get => "/short_urls/new").not_to route_to("short_urls#new")
     end
-
+    
     it "routes to #show" do
-      expect(:get => "/shorty").to route_to("short_urls#show", :shorty => "shorty")
+      expect(:get => "/short_urls/1").to route_to("short_urls#show", :id => "1")
+    end
+    
+    it "routes to #shorty" do
+      expect(:get => "/shorty").to route_to("short_urls#shorty", :shorty => "shorty")
     end
 
     it "does not route to #edit" do

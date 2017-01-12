@@ -8,19 +8,6 @@ RSpec.describe UsersController, type: :controller do
       expect(response.status).to eq(406)
     end
 
-    it "is without sending X-Api-Key should result in error" do
-      @request.headers["Content-Type"] = 'application/vnd.api+json'
-      post :create, params: {}
-      expect(response.status).to eq(403)
-    end
-
-    it "is with incorrect X-Api-Key should result in error" do
-      @request.headers["Content-Type"] = 'application/vnd.api+json'
-      @request.headers["X-Api-Key"] = '0000'
-      post :create, params: {}
-      expect(response.status).to eq(403)
-    end
-
     it "is with invalid data should result in error" do
       user = create(:user)
       @request.headers["Content-Type"] = 'application/vnd.api+json'

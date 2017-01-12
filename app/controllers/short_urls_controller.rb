@@ -1,8 +1,8 @@
 class ShortUrlsController < ApplicationController
   include FreegeoipUtils
 
-  before_action :set_short_url, only: [:destroy]
-  before_action :set_short_url_by_shorty, only: [:show]
+  before_action :set_short_url, only: [:destroy, :show]
+  before_action :set_short_url_by_shorty, only: [:shorty]
   before_action :validate_user, except: [:show]
 
   # GET /short_urls
@@ -14,18 +14,7 @@ class ShortUrlsController < ApplicationController
 
   # GET /short_urls/1
   def show
-    ip = '117.216.146.232' #request.remote_ip  # use commented code for productions
-    visitor_data = get_visitor_details(ip)
-    @short_url.short_visits.build(
-      visitor_ip: visitor_data["ip"], 
-      visitor_city: visitor_data["city"],
-      visitor_state: visitor_data["region_name"],
-      visitor_country: visitor_data["country_name"])
-    if @short_url.save
-      redirect_to @short_url.normalized_url, status: :moved_permanently 
-    else
-      render_error(@short_url, :unprocessable_entity)
-    end
+    render json: @short_url
   end
 
   # POST /short_urls
@@ -54,6 +43,21 @@ class ShortUrlsController < ApplicationController
   # DELETE /short_urls/1
   def destroy
     @short_url.destroy
+  end
+
+  def shorty
+    ip = '117.216.146.232' #request.remote_ip  # use commented code for productions
+    visitor_data = get_visitor_details(ip)
+    @short_url.short_visits.build(
+      visitor_ip: visitor_data["ip"], 
+      visitor_city: visitor_data["city"],
+      visitor_state: visitor_data["region_name"],
+      visitor_country: visitor_data["country_name"])
+    if @short_url.save
+      redirect_to @short_url.normalized_url, status: :moved_permanently 
+    else
+      render_error(@short_url, :unprocessable_entity)
+    end
   end
 
   private

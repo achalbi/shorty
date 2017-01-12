@@ -1,6 +1,6 @@
 Shorty 
 
-It is Rails API to generate short URLs for website
+It is a Rails API to generate short URLs for website
 
 Rails 5.0.0
 Ruby 2.3.0
@@ -30,4 +30,4 @@ Below are the list of APIs that are available which also conatins header and bod
                         "email": "ach2@asd.com"}}
 
 * Short URLS : http://localhost:3000/XXXXX
-	short urls are generated securerandom alphanumeric code generator.
+	short urls are generated from alphanumeric code generator.
