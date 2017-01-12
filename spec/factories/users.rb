@@ -13,9 +13,10 @@
 
 FactoryGirl.define do
   factory :user do
-    name "Achal"
-    sequence(:email) { |n| "achal#{n}@gmail.com"}
-    password_digest "MyStringPassword"
-    token "MyStringToken"
+    name { Faker::Name}
+    email { Faker::Internet.email }
+    password "MyPassword"
+    password_confirmation "MyPassword"
+    token "MyToken"
   end
 end

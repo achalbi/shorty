@@ -15,10 +15,66 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
 
-    it "is valid with a name, email and password_digest"
-    it "is invalid without a name"
-    it "is invalid without a email"
-    it "is invalid without an password_digest"
-    it "is invalid with a duplicate email address"
+    it "is valid with a name, email, token and password" do
+    	expect(build(:user)).to be_valid
+    end
+
+    it "is invalid without a name" do
+    	user = build(:user, name: nil)
+    	user.valid?
+		expect(user.errors[:name]).to include("can't be blank")
+    end
+
+    it "is invalid without a email" do
+    	user = build(:user, email: nil)
+    	user.valid?
+		expect(user.errors[:email]).to include("can't be blank")
+    end
+
+    it "is invalid without a password" do
+    	user = build(:user, password: nil)
+    	user.valid?
+		expect(user.errors[:password]).to include("can't be blank")
+    end
+
+    it "is invalid without a password_confirmation" do
+    	user = build(:user, password_confirmation: nil)
+    	user.valid?
+		expect(user.errors[:password_confirmation]).to include("can't be blank")
+    end
+
+    it "is invalid with password not equal to password_confirmation"  do
+      	user = build(:user, password: "abcd", password_confirmation: "1234")
+    	user.valid?
+		expect(user.errors[:password_confirmation]).to include("doesn't match Password")
+	end
+
+	it "is invalid email format" do
+		user = build(:user, email: nil)
+    	user.valid?
+		expect(user.errors[:email]).to include("is invalid")
+	end
+
+    it "is invalid with a duplicate email address" do
+    	create(:user)
+    	user = build(:user)
+    	user.valid?
+		expect(user.errors[:email]).to include("has already been taken")
+	end
+
+    it "is invalid with a duplicate token address" do
+    	create(:user)
+    	user = build(:user)
+    	user.valid?
+		expect(user.errors[:token]).to include("has already been taken")
+	end
+
+    context "user access"
+     it "is invalid to view another user"
+     it "is invalid to update another user"
+     it "is invalid to view another user"
+
+
+
 
 end
