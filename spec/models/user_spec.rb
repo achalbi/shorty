@@ -48,16 +48,30 @@ RSpec.describe User, type: :model do
     	user.valid?
 		expect(user.errors[:password_confirmation]).to include("doesn't match Password")
 	end
+	it "is valid email format" do
+		user = build(:user, email: "achal.rvce@gmail.com")
+    	user.valid?
+		expect(user).to be_valid
+	end
 
 	it "is invalid email format" do
-		user = build(:user, email: nil)
+		user = build(:user, email: "abc")
+    	user.valid?
+		expect(user.errors[:email]).to include("is invalid")
+		user = build(:user, email: "abc@111")
+    	user.valid?
+		expect(user.errors[:email]).to include("is invalid")
+		user = build(:user, email: "abc.asdsa")
+    	user.valid?
+		expect(user.errors[:email]).to include("is invalid")
+		user = build(:user, email: "abc.adas.asd@123")
     	user.valid?
 		expect(user.errors[:email]).to include("is invalid")
 	end
 
     it "is invalid with a duplicate email address" do
-    	create(:user)
-    	user = build(:user)
+    	create(:user, email: "achal.rvce@gmail.com")
+    	user = build(:user, email: "achal.rvce@gmail.com")
     	user.valid?
 		expect(user.errors[:email]).to include("has already been taken")
 	end
@@ -68,13 +82,5 @@ RSpec.describe User, type: :model do
     	user.valid?
 		expect(user.errors[:token]).to include("has already been taken")
 	end
-
-    context "user access"
-     it "is invalid to view another user"
-     it "is invalid to update another user"
-     it "is invalid to view another user"
-
-
-
 
 end

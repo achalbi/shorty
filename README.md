@@ -1,24 +1,33 @@
-# README
+Shorty 
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+It is Rails API to generate short URLs for website
 
-Things you may want to cover:
+Rails 5.0.0
+Ruby 2.3.0
 
-* Ruby version
+Below are the list of APIs that are available which also conatins header and body params
 
-* System dependencies
+* header: 
+	Content-Type : application/vnd.api+json
+	X-Api-Key : TNZCmuthS2qjGYjbPcPdFhw2 (token used to Athenticate user)	
 
-* Configuration
+* User : [create, show, update, destroy] : http://localhost:3000/users
+	body: { "user": {
+                        "name": "Number7",
+                        "password": "password",
+                        "email": "ach2@asd.com",
+                        "password_confirmation": "password" }}
 
-* Database creation
+* Short_urls : [ index, create, update, destroy ] : http://localhost:3000/short_urls
+	body: {	"short_url": {
+                        "original_url": "www.google.com"}}
 
-* Database initialization
+* Short_visits : [ index, show destroy ] : http://localhost:3000/short_visits
 
-* How to run the test suite
+* sessions : [ create, destroy ] : http://localhost:3000/sessions
+	body: { "session": {
+                        "password": "password",
+                        "email": "ach2@asd.com"}}
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* Short URLS : http://localhost:3000/XXXXX
+	short urls are generated securerandom alphanumeric code generator.

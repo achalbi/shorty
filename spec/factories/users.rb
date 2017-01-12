@@ -18,5 +18,7 @@ FactoryGirl.define do
     password "MyPassword"
     password_confirmation "MyPassword"
     token "MyToken"
+
+
   end
 end
