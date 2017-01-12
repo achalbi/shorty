@@ -8,7 +8,8 @@ class ShortUrlsController < ApplicationController
   # GET /short_urls
   def index
     @short_urls = current_user.short_urls.page(params[:page] ? params[:page][:number] : 1)
-    render json: @short_urls
+    render json: @short_urls, each_serializer: ShortUrlsListSerializer
+
   end
 
   # GET /short_urls/1

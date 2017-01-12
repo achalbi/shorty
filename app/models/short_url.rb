@@ -26,6 +26,10 @@ class ShortUrl < ApplicationRecord
   	SecureRandom.base58(5)
   end
 
+  def short_url
+  	ENV['root_url']+self.shorty
+  end
+
   # ensure the url starts with it protocol and is normalized
   def normalized_url
   	"http://#{self.original_url}" unless self.original_url=~/^https?:\/\//
